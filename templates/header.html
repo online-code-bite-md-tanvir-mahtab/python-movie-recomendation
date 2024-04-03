@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MovieRecomend</title>
+    <!-- Latest compiled and minified CSS -->
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet" />
+  </head>
+  <header class="text-gray-600 body-font">
+    <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+      <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+        </svg>
+        <span class="ml-3 text-xl">Tailblocks</span>
+      </a>
+      <nav class="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400 flex flex-wrap items-center text-base justify-center">
+        <a class="mr-5 hover:text-gray-900" href="{{ url_for('home') }}">Home</a>
+        <a class="mr-5 hover:text-gray-900" href="{{ url_for('movies') }}">Movie</a>
+        {% if loged == 1 %}
+          <a class="mr-5 hover:text-gray-900" href="{{ url_for('addmovies') }}">Add Movies</a>
+          <a class="mr-5 hover:text-gray-900" href="{{ url_for('recomend') }}">Recomendation</a>
+          <a class="mr-5 hover:text-gray-900" href="{{ url_for('newsfeed') }}">Entertainment news</a>
+          <a class="mr-5 hover:text-gray-900" href="{{ url_for('selectMovie') }}">Watch Movie</a>
+        {% endif %}
+
+        <a class="mr-5 hover:text-gray-900" href="{{ url_for('about') }}">About</a>
+      </nav>
+      {% if loged == 0 %}
+        <a href="{{ url_for('login') }}">
+          <button class="inline-flex items-center bg-indigo-500 border-0 py-1 px-3 focus:outline-none hover:bg-indigo-600 rounded text-white text-base mt-4 md:mt-0">
+            Log in<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+              <path d="M5 12h14M12 5l7 7-7 7"></path>
+            </svg>
+          </button>
+        </a>
+      {% endif %}
+
+      {% if loged == 1 %}
+        <a href="{{ url_for('logout') }}"><button class="inline-flex items-center bg-red-500 border-0 py-1 px-3 focus:outline-none hover:bg-red-600 rounded text-white text-base mt-4 md:mt-0">Log Out</button></a>
+      {% endif %}
+    </div>
+  </header>
+</html>
