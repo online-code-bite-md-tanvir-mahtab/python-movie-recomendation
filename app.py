@@ -370,7 +370,7 @@ def detailmovie(movieId):
     movies = response.json()['movies']
     print(movieId)
     for movie in movies:
-        if (int(movieId)-1) == movie['id']:
+        if (int(movieId)) == movie['id']:
             moviedata = movie
             print(f"the movie: {movie}")
     if request.method == "POST":
