@@ -134,7 +134,7 @@ def movies():
 
     response = requests.get(url)
     movies_to_search = response.json()['movies']
-    # print(movies_to_search)
+    print(movies_to_search)
     user_data = pd.read_csv('user_data.csv')
     data = pd.DataFrame(movies_to_search)
     if user_data.empty:
@@ -143,7 +143,9 @@ def movies():
 
         if request.method == 'POST':
             search_name = request.form.get('email')
+            # print()
             print(f"my value:{search_name}is")
+            print(data['name'][0]+"h")
             searched_data = data[data['name'] ==
                                  search_name].reset_index(drop=True)
             print(f"search found: {len(searched_data)}")
@@ -374,26 +376,23 @@ def detailmovie(movieId):
             moviedata = movie
             print(f"the movie: {movie}")
     if request.method == "POST":
-        movie_name = request.form.get('name')
-        movie_genre = request.form.get('genre')
         movie_id = str(uuid.uuid4())
         movie_rating = request.form.get('rating')
-        movie_r_date = request.form.get('date')
-        print(movie_id)
-        url = 'https://api.sheety.co/e78e679bf4063c1cfa9e4f16869c45b0/movieRecomendationSystemDatabase/movies'
+        user_id = idofuser
+        print(movie_rating)
+        url = 'https://api.sheety.co/e78e679bf4063c1cfa9e4f16869c45b0/movieRecomendationSystemDatabase/ratings'
 
-        # body = {
-        #     'movie': {
-        #         "id": movie_id,
-        #         "name": movie_name,
-        #         "genre": movie_genre,
-        #         "rating": movie_rating,
-        #         "releaseDate": movie_r_date,
-        #     }
-        # }
+        body = {
+            "rating": {
+            "userId": int(user_id),
+            "movieId": int(movie['id']),
+            "rating": str(movie_rating)
+            }
+        }
 
-        response = requests.get(url)
-        movie = response.json()
+        response = requests.post(url,json=body)
+        rate = response.json()
+        print(rate)
         return "The rating is added"
     print(moviedata)
     return render_template('detailmovie.html', mdata=moviedata, loged=1, userid=idofuser)
