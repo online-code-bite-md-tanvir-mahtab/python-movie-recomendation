@@ -362,6 +362,8 @@ def addmovies():
 
 @app.route('/movies/<movieId>', methods=['GET', 'POST'])
 def detailmovie(movieId):
+    user_data = pd.read_csv('user_data.csv')
+    idofuser = user_data['user_id'][0]
     moviedata = {}
     url = 'https://api.sheety.co/e78e679bf4063c1cfa9e4f16869c45b0/movieRecomendationSystemDatabase/movies'
     response = requests.get(url)
@@ -394,7 +396,7 @@ def detailmovie(movieId):
         movie = response.json()
         return "The rating is added"
     print(moviedata)
-    return render_template('detailmovie.html', mdata=moviedata, loged=1)
+    return render_template('detailmovie.html', mdata=moviedata, loged=1, userid=idofuser)
 
 
 if __name__ == '__main__':
