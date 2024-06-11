@@ -1,0 +1,58 @@
+{% include 'header.html' %}
+<section class="text-gray-600 body-font">
+    <div class="container px-5 py-24 mx-auto">
+        <div class="text-center mb-20">
+            <h1 class="sm:text-3xl text-2xl font-medium title-font text-gray-900 mb-4">{{ hall_name }}</h1>
+            <p class="text-base leading-relaxed xl:w-2/4 lg:w-3/4 mx-auto">Please maintain the time and follow the booking policy.</p>
+        </div>
+        
+        <div class="flex flex-col items-center">
+            <div class="grid grid-cols-10 gap-2 mb-10">
+                {% for i in range(hall_seats) %}
+                <div class="p-2">
+                    <button class="w-full bg-gray-100 rounded flex p-4 items-center justify-center hover:bg-gray-200" onclick="toggleForm('{{ i + 1 }}')">
+                        <span class="title-font font-medium">Seat {{ i + 1 }}</span>
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+            <div id="seatForm" class="hidden w-full max-w-lg bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-lg font-medium text-gray-900 mb-4">Book Your Seat</h2>
+                <form method="post">
+                    <div class="relative mb-4">
+                        <label for="seat" class="leading-7 text-sm text-gray-600">Selected Seat</label>
+                        <input type="text" id="seat" name="seat" readonly class="w-full bg-gray-100 rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                    </div>
+                    <div class="relative mb-4">
+                        <label for="full-name" class="leading-7 text-sm text-gray-600">Full Name</label>
+                        <input type="text" id="full-name" name="full-name" required class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                    </div>
+                    <div class="relative mb-4">
+                        <label for="email" class="leading-7 text-sm text-gray-600">Email</label>
+                        <input type="email" id="email" name="email" required class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                    </div>
+                    <div class="relative mb-4">
+                        <label for="date" class="leading-7 text-sm text-gray-600">Date</label>
+                        <input type="date" id="date" name="date" required class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                    </div>
+                    <div class="relative mb-4">
+                        <label for="time" class="leading-7 text-sm text-gray-600">Time</label>
+                        <input type="time" id="time" name="time" required class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                    </div>
+                    <button type="submit" class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Book Now</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function toggleForm(seatNumber) {
+        document.getElementById('seat').value = seatNumber;
+        var form = document.getElementById("seatForm");
+        form.classList.toggle("hidden");
+        window.scrollTo({ top: form.offsetTop, behavior: 'smooth' });
+    }
+</script>
+
+{% include 'footer.html' %}
