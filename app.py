@@ -149,7 +149,7 @@ def movies():
     print(movies_to_search)
     user_data = pd.read_csv('user_data.csv')
     data = pd.DataFrame(movies_to_search)
-    if user_data.empty:
+    if isLogedIn == 0:
         return render_template('movies.html', movie_data=data, index=100, msg='found', loged=isLogedIn)
     else:
 
@@ -366,16 +366,13 @@ def addmovies():
         movie_rating = request.form.get('rating')
         movie_r_date = request.form.get('date')
         print(movie_id)
-        url = 'https://api.sheety.co/e78e679bf4063c1cfa9e4f16869c45b0/movieRecomendationSystemDatabase/movies'
+        url = 'http://127.0.0.1:5000/movie_requests'
 
         body = {
-            'movie': {
-                "id": movie_id,
-                "name": movie_name,
-                "genre": movie_genre,
-                "rating": movie_rating,
-                "releaseDate": movie_r_date,
-            }
+            "name": movie_name,
+            "genre": movie_genre,
+            "rating": movie_rating,
+            "release_date": movie_r_date
         }
 
         response = requests.post(url, json=body)
@@ -421,6 +418,12 @@ def detailmovie(movieId):
     print(moviedata)
     return render_template('detailmovie.html', mdata=moviedata, loged=isLogedIn, userid=idofuser)
 
+
+@app.route('/profile')
+def profile():
+    print(user_my_id)
+    response = requests.get(url=f'http://127.0.0.1:5000/user/{user_my_id}')
+    return render_template('profile.html', loged=isLogedIn, profile= response.json())
 
 if __name__ == '__main__':
     app.run(debug=True,port=9000)
